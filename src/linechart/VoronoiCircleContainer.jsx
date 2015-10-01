@@ -13,7 +13,8 @@ module.exports = React.createClass({
     return { 
       circleRadius: 3,
       circleFill: '#1f77b4',
-      hoverAnimation: true
+      hoverAnimation: true,
+      point: {x: 0, y: 0}
     };
   },
 
@@ -45,9 +46,9 @@ module.exports = React.createClass({
             voronoiPath={this._drawPath(props.vnode)}
             cx={props.cx}
             cy={props.cy}
+            point={this.props.point}
             circleRadius={this.state.circleRadius}
-            circleFill={this.state.circleFill}
-        />
+            circleFill={this.state.circleFill}/>
       </g>
     );
   },

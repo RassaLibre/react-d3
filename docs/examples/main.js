@@ -19,7 +19,30 @@ var Demos = React.createClass({
   getInitialState: function() {
     return {
       areaData: [],
-      ohlcData: []
+      ohlcData: [],
+      lineDataCheckboxes: {
+        series1: true,
+        series2: true,
+        series3: true
+      },
+      lineData: [
+        { 
+          name: 'series1',
+          values: [ { x: 0, y: 20 }, { x: 1, y: 30 }, { x: 2, y: 10 }, { x: 3, y: 5 }, { x: 4, y: 8 }, { x: 5, y: 15 }, { x: 6, y: 10 } ],
+          strokeWidth: 4,
+          strokeDashArray: "5,5",
+        },
+        {
+          name: 'series2',
+          strokeWidth: 4,
+          values : [ { x: 0, y: 8 }, { x: 1, y: 5 }, { x: 2, y: 20 }, { x: 3, y: 12 }, { x: 4, y: 4 }, { x: 5, y: 6 }, { x: 6, y: 2 } ]
+        },
+        {
+          name: 'series3',
+          strokeWidth: 4,
+          values: [ { x: 0, y: 0 }, { x: 1, y: 5 }, { x: 2, y: 8 }, { x: 3, y: 2 }, { x: 4, y: 6 }, { x: 5, y: 4 }, { x: 6, y: 2 } ]
+        } 
+      ]
     }
   },
 
@@ -46,24 +69,16 @@ var Demos = React.createClass({
     }.bind(this));
   },
 
+  changeLineGraphDataSet: function(event){
+    var currState = this.state.lineDataCheckboxes;
+    currState[event.target.value] = event.target.checked;
+    this.setState({lineDataCheckboxes: currState});
+  },
+
   render: function() {
 
-    var lineData = [
-      { 
-        name: 'series1',
-        values: [ { x: 0, y: 20 }, { x: 1, y: 30 }, { x: 2, y: 10 }, { x: 3, y: 5 }, { x: 4, y: 8 }, { x: 5, y: 15 }, { x: 6, y: 10 } ],
-        strokeWidth: 3,
-        strokeDashArray: "5,5",
-      },
-      {
-        name: 'series2',
-        values : [ { x: 0, y: 8 }, { x: 1, y: 5 }, { x: 2, y: 20 }, { x: 3, y: 12 }, { x: 4, y: 4 }, { x: 5, y: 6 }, { x: 6, y: 2 } ]
-      },
-      {
-        name: 'series3',
-        values: [ { x: 0, y: 0 }, { x: 1, y: 5 }, { x: 2, y: 8 }, { x: 3, y: 2 }, { x: 4, y: 6 }, { x: 5, y: 4 }, { x: 6, y: 2 } ]
-      } 
-    ];
+    //ES6 MADAFAKA
+    var self = this;
 
     var barData = [
       {
@@ -120,66 +135,32 @@ var Demos = React.createClass({
           <h3 className="page-header">react-d3: Multiple series charts</h3>
         </div>
         <div className="row">
-          <div className="col-md-6">
+          <div className="col-md-12">
+            <div>
+              <input type="checkbox" name="line-graph-data" value="series1" checked={this.state.lineDataCheckboxes.series1} onChange={this.changeLineGraphDataSet}/><span> Series1  </span>
+              <input type="checkbox" name="line-graph-data" value="series2" checked={this.state.lineDataCheckboxes.series2} onChange={this.changeLineGraphDataSet}/><span> Series2  </span>
+              <input type="checkbox" name="line-graph-data" value="series3" checked={this.state.lineDataCheckboxes.series3} onChange={this.changeLineGraphDataSet}/><span> Series3  </span>
+            </div>
             <LineChart
               legend={true}
-              data={lineData}
+              data={this.state.lineData.filter(function(value){
+                return self.state.lineDataCheckboxes[value.name];
+              })}
               width='100%'
               height={400}
               viewBoxObject={{
                 x: 0,
                 y: 0,
-                width: 500,
+                width: 1000,
                 height: 400
               }}
               title="Line Chart"
               yAxisLabel="Altitude"
               xAxisLabel="Elapsed Time (sec)"
               gridHorizontal={true}
+              hoverAnimation={false}
+              circleRadius={10}
             />
-          </div>
-          <div className="col-md-6">
-            <pre ref='block'>
-              <code className='js'>
-              {
-`var lineData = [
-  {
-    name: "series1",
-    values: [ { x: 0, y: 20 }, ..., { x: 24, y: 10 } ],
-    strokeWidth: 3,
-    strokeDashArray: "5,5",
-  },
-  ....
-  {
-    name: "series2",
-    values: [ { x: 70, y: 82 }, ..., { x: 76, y: 82 } ]
-  }
-];`
-              }
-              </code>
-            </pre>
-            <pre ref='block'>
-              <code className='html'>
-              {
-`<LineChart
-  legend={true}
-  data={lineData}
-  width='100%'
-  height={400}
-  viewBoxObject={{
-    x: 0,
-    y: 0,
-    width: 500,
-    height: 400
-  }}
-  title="Line Chart"
-  yAxisLabel="Altitude"
-  xAxisLabel="Elapsed Time (sec)"
-  gridHorizontal={true}
-/>`
-              }
-              </code>
-            </pre>
           </div>
         </div>
         <div className="row">

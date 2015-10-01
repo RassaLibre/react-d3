@@ -62,8 +62,7 @@ module.exports = React.createClass({
           strokeWidth={series.strokeWidth}
           strokeDashArray={series.strokeDashArray}
           seriesName={series.name}
-          key={idx}
-        />
+          key={idx}/>
       );
     });
 
@@ -92,17 +91,17 @@ module.exports = React.createClass({
               key={idx} 
               circleFill={circleFill}
               vnode={vnode}
+              point={point}
               hoverAnimation={props.hoverAnimation}
               cx={cx} cy={cy} 
-              circleRadius={props.circleRadius}
-          />
+              circleRadius={props.circleRadius}/>
       );
     }.bind(this));
 
     return (
       <g>
-        <g>{regions}</g>
         <g>{lines}</g>
+        <g>{regions}</g>
       </g>
     );
   }

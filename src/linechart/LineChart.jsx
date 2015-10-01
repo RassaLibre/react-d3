@@ -91,8 +91,7 @@ module.exports = React.createClass({
             gridVertical={props.gridVertical}
             gridVerticalStroke={props.gridVerticalStroke}
             gridVerticalStrokeWidth={props.gridVerticalStrokeWidth}
-            gridVerticalStrokeDash={props.gridVerticalStrokeDash}
-          />
+            gridVerticalStrokeDash={props.gridVerticalStrokeDash}/>
           <YAxis
             yAxisClassName={props.yAxisClassName}
             strokeWidth={props.yAxisStrokeWidth}
@@ -112,8 +111,7 @@ module.exports = React.createClass({
             gridHorizontal={props.gridHorizontal}
             gridHorizontalStroke={props.gridHorizontalStroke}
             gridHorizontalStrokeWidth={props.gridHorizontalStrokeWidth}
-            gridHorizontalStrokeDash={props.gridHorizontalStrokeDash}
-          />
+            gridHorizontalStrokeDash={props.gridHorizontalStrokeDash}/>
           <DataSeries
             xScale={scales.xScale}
             yScale={scales.yScale}
